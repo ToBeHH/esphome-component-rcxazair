@@ -36,15 +36,15 @@ void Rcxazair::gattc_event_handler(
       auto chr = this->parent_->get_characteristic(0xc760, 0xc761);
       if (chr == nullptr) {
           ESP_LOGE(TAG, "[%s] No control service found at device, not an rcxazair?",
-                   this->parent_->address_str().c_str());
+                   this->parent_->address_str());
         break;
       }
       ESP_LOGI(TAG, "[%s] got characteristic!",
-              this->parent_->address_str().c_str());
+              this->parent_->address_str());
       auto status = esp_ble_gattc_register_for_notify(this->parent()->get_gattc_if(), this->parent()->get_remote_bda(), chr->handle);
       if (status) {
         ESP_LOGE(TAG, "[%s] esp_ble_gattc_register_for_notify failed, status=%d",
-                this->parent_->address_str().c_str(),
+                this->parent_->address_str(),
                 status);
       }
       this->char_handle_ = chr->handle;
@@ -59,7 +59,7 @@ void Rcxazair::gattc_event_handler(
         break;
 #if 0
       ESP_LOGI(TAG, "[%s] Got notify, len %u",
-              this->parent_->address_str().c_str(),
+              this->parent_->address_str(),
               param->notify.value_len);
 #endif
 
@@ -130,7 +130,7 @@ void Rcxazair::handle_message(uint8_t *msg, uint16_t len)
             break;
         default:
         ESP_LOGI(TAG, "[%s] Got unknown message type %x",
-                this->parent_->address_str().c_str(),
+                this->parent_->address_str(),
                 type);
             break;
     }
